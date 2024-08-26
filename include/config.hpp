@@ -12,7 +12,7 @@
 #define PAGE_SIZE (unsigned long long int)(1ULL<<PAGE_SIZE_BITS)           //size entry  size of one pag3
 #define VIRTUAL_MEMORY_SIZE (1ULL << VIRTUAL_MEMORY_SIZE_BITS) // 1MB virtual memory
 #define PHYSICAL_MEMORY_SIZE (1ULL << PHYSICAL_MEMORY_SIZE_BITS) // 1MB physical memory
-#define NUMBER_OF_LEVELS 0    // Number of levels in the page table
+#define NUMBER_OF_LEVELS 2    // Number of levels in the page table
 
 // Page table configurations for multi-level page tables
 #define NUMBER_OF_PAGES VIRTUAL_MEMORY_SIZE / (unsigned long long int)PAGE_SIZE

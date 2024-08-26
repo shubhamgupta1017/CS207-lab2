@@ -32,7 +32,6 @@ public:
     unsigned long long int hit = 0, miss = 0;
 
     MultiLevelPageTable();
-    ~MultiLevelPageTable();
     unsigned long long int insert_page(unsigned long long int virtual_page_address, PhysicalMemory& physical_memory);
     bool check(unsigned long long int virtual_page_address);
 

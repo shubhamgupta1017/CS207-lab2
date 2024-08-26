@@ -12,7 +12,7 @@ Level2PageTable::Level2PageTable(unsigned long long int number_of_pages)
 
 unsigned long long int Level2PageTable::insert_page(unsigned long long int virtual_page_address, PhysicalMemory& physical_memory) {
     unsigned long long int physical_frame_address = physical_memory.allocate_page();
-    if (physical_frame_address == static_cast<unsigned long long int>(-1)) {
+    if (physical_frame_address == static_cast<unsigned long long int>(1)) {
         return -1;
     }
     page_table[virtual_page_address] = (physical_frame_address << OFFSET_BITS) + 1;
@@ -47,12 +47,6 @@ MultiLevelPageTable::MultiLevelPageTable() {
     page_table_first.resize(1ULL << bits_per_level[0], nullptr);
 }
 
-MultiLevelPageTable::~MultiLevelPageTable() {
-    for (auto pt : page_table_first) {
-        delete pt;
-    }
-}
-
 unsigned long long int MultiLevelPageTable::insert_page(unsigned long long int virtual_page_address, PhysicalMemory& physical_memory) {
     extract_bits(virtual_page_address);
 
@@ -82,7 +76,7 @@ void MultiLevelPageTable::extract_bits(unsigned long long int virtual_page_addre
 
 SinglePageTable::SinglePageTable() {
     page_table = new int[NUMBER_OF_PAGES];
-    for (int i = 0; i < NUMBER_OF_PAGES; i++) {
+    for (int i = 0; i < (static_cast<int>(NUMBER_OF_PAGES)); i++) {
         page_table[i] = 0;
     }
 }
@@ -109,7 +103,7 @@ bool SinglePageTable::check(unsigned long long int virtual_page_address) const {
 // Page Table using a Map Implementation
 
 unsigned long long int PageTableMap::insert_page(unsigned long long int virtual_page_address, PhysicalMemory& physical_memory) {
-    if (virtual_page_address < 0 || virtual_page_address >= VIRTUAL_MEMORY_SIZE) {
+    if (virtual_page_address >= VIRTUAL_MEMORY_SIZE) {
         cout << "Invalid virtual page address\n";
         return -1;
     }

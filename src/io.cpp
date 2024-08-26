@@ -64,7 +64,7 @@ unsigned long long int do_task_map(unsigned long long int logical_address, unsig
     unsigned long long int virtual_frame = logical_address >> OFFSET_BITS;
     unsigned long long int offset = logical_address & ((1 << OFFSET_BITS) - 1);
     for (unsigned long long int i = 0; i < num_pages; i++) {
-        if (page_table.check(virtual_frame + i) == -1) {  // Page found in page table
+        if (page_table.check(virtual_frame + i) == -1ULL) {  // Page found in page table
             cout << "page hit\n";
             page_table.hit++;  // PERFORMANCE MODULE - HITS 
             return 0;
@@ -75,7 +75,7 @@ unsigned long long int do_task_map(unsigned long long int logical_address, unsig
     cout << "start" << endl;
     for (unsigned long long int i = 0; i < num_pages; i++) {
         unsigned long long int physical_frame = page_table.insert_page(virtual_frame + i, physical_memory);
-        if (physical_frame != -1) {
+        if (physical_frame != -1ULL) {
             physical_frame = physical_frame << OFFSET_BITS;
             physical_frame += offset;
             cout << "Physical Address: 0X" << hex << uppercase << physical_frame << " to 0X" << hex << uppercase << physical_frame + PAGE_SIZE << endl; // DOUBT
@@ -90,7 +90,7 @@ unsigned long long int do_task_single(unsigned long long int logical_address, un
     unsigned long long int virtual_frame = logical_address >> OFFSET_BITS;
     unsigned long long int offset = logical_address & ((1 << OFFSET_BITS) - 1);
     for (unsigned long long int i = 0; i < num_pages; i++) {
-        if (page_table.check(virtual_frame + i) == -1) {
+        if (page_table.check(virtual_frame + i) == 0) {
             cout << "page hit\n";
             page_table.hit++;  // PERFORMANCE MODULE - HITS 
             return 0;
@@ -101,7 +101,7 @@ unsigned long long int do_task_single(unsigned long long int logical_address, un
     cout << "start" << endl;
     for (unsigned long long int i = 0; i < num_pages; i++) {
         unsigned long long int physical_frame = page_table.insert_page(virtual_frame + i, physical_memory);
-        if (physical_frame != -1) {
+        if (physical_frame != -1ULL) {
             physical_frame = physical_frame << OFFSET_BITS;
             physical_frame += offset;
             cout << "Physical Address: 0X" << hex << uppercase << physical_frame << " to 0X" << hex << uppercase << physical_frame + PAGE_SIZE << endl;
@@ -116,7 +116,7 @@ unsigned long long int do_task_multiple(unsigned long long int logical_address, 
     unsigned long long int virtual_frame = logical_address >> OFFSET_BITS;
     unsigned long long int offset = logical_address & ((1 << OFFSET_BITS) - 1);
     for (unsigned long long int i = 0; i < num_pages; i++) {
-        if (page_table.check(virtual_frame + i) == -1) {
+        if (page_table.check(virtual_frame + i) == 1) {
             cout << "page hit\n";
             page_table.hit++;  // PERFORMANCE MODULE - HIT
             return 0;
@@ -127,7 +127,7 @@ unsigned long long int do_task_multiple(unsigned long long int logical_address, 
     cout << "start" << endl;
     for (unsigned long long int i = 0; i < num_pages; i++) {
         unsigned long long int physical_frame = page_table.insert_page(virtual_frame + i, physical_memory);
-        if (physical_frame != -1) {
+        if (physical_frame != -1ULL) {
             physical_frame = physical_frame << OFFSET_BITS;
             physical_frame += offset;
             cout << "Physical Address: 0X" << hex << uppercase << physical_frame << " to 0X" << hex << uppercase << physical_frame + PAGE_SIZE << endl;

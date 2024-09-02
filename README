@@ -21,7 +21,9 @@ ABOUT THE DIRECTORIES:
     b. memory_manager.cpp - Contains the Physical Memory class
     c. run.cpp - Contains the main function
     d. task_module.cpp
-    e. test.cpp - Generate a trace file based on the number of tasks
+    e. test.cpp - Generate a trace file based on the number of tasks using multithreading
 5. Makefile:
 6. README:
 7. tracefile_4KB_4GB_4GB.txt: Trace File
+8. tracefile.txt: tracefile generated using test.cpp
+9. performance.txt: performance information

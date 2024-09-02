@@ -63,10 +63,12 @@ unsigned long long int do_task_map(unsigned long long int logical_address, unsig
     unsigned long long int num_pages = (memory_req + PAGE_SIZE - 1) / PAGE_SIZE;  // Ceiling division to account for partial pages
     unsigned long long int virtual_frame = logical_address >> OFFSET_BITS;
     unsigned long long int offset = logical_address & ((1 << OFFSET_BITS) - 1);
+    int return_val=-1;
     for (unsigned long long int i = 0; i < num_pages; i++) {
         if (page_table.check(virtual_frame + i) == -1ULL) {  // Page found in page table
             cout << "page hit\n";
             page_table.hit++;  // PERFORMANCE MODULE - HITS 
+            return_val=0;
             //return 0;
         } else {
             page_table.miss++; // PERFORMANCE MODULE - MISS
@@ -82,6 +84,9 @@ unsigned long long int do_task_map(unsigned long long int logical_address, unsig
         }
     }
     cout << "end" << endl;
+    if(return_val==0){
+        return 0;
+    }
     return num_pages * PAGE_SIZE;
 }
 
@@ -89,10 +94,12 @@ unsigned long long int do_task_single(unsigned long long int logical_address, un
     unsigned long long int num_pages = (memory_req + PAGE_SIZE - 1) / PAGE_SIZE;  // Ceiling division to account for partial pages
     unsigned long long int virtual_frame = logical_address >> OFFSET_BITS;
     unsigned long long int offset = logical_address & ((1 << OFFSET_BITS) - 1);
+    int return_val=-1;
     for (unsigned long long int i = 0; i < num_pages; i++) {
         if (page_table.check(virtual_frame + i) == 0) {
             cout << "page hit\n";
             page_table.hit++;  // PERFORMANCE MODULE - HITS 
+            return_val=0;
             //return 0;
         } else {
             page_table.miss++; // PERFORMANCE MODULE - MISS
@@ -108,6 +115,9 @@ unsigned long long int do_task_single(unsigned long long int logical_address, un
         }
     }
     cout << "end" << endl;
+    if(return_val==0){
+        return 0;
+    }
     return num_pages * PAGE_SIZE;
 }
 
@@ -115,10 +125,12 @@ unsigned long long int do_task_multiple(unsigned long long int logical_address, 
     unsigned long long int num_pages = (memory_req + PAGE_SIZE - 1) / PAGE_SIZE;  // Ceiling division to account for partial pages
     unsigned long long int virtual_frame = logical_address >> OFFSET_BITS;
     unsigned long long int offset = logical_address & ((1 << OFFSET_BITS) - 1);
+    int return_val=-1;
     for (unsigned long long int i = 0; i < num_pages; i++) {
         if (page_table.check(virtual_frame + i) == 1) {
             cout << "page hit\n";
             page_table.hit++;  // PERFORMANCE MODULE - HIT
+            return_val=0;
             //return 0;
         } else {
             page_table.miss++; // PERFORMANCE MODULE - MISS
@@ -134,6 +146,9 @@ unsigned long long int do_task_multiple(unsigned long long int logical_address, 
         }
     }
     cout << "end" << endl;
+    if(return_val==0){
+        return 0;
+    }
     return num_pages * PAGE_SIZE;
 }
 
@@ -169,13 +184,17 @@ pair<int, int> map(const string& filename, ofstream& outFile) {
         }
     }
     outFile << "--------------HITS & MISSES---------------" << endl;
+    unsigned long long int total_hits = 0, total_misses = 0;
     for (auto x : task_table_map) {
         unsigned long long int t = x.first;
         PageTableMap pt = x.second;
         unsigned long long int hit = pt.hit;
         unsigned long long int miss = pt.miss;
+        total_hits += hit;
+        total_misses += miss;
         outFile << "Task: T" << t << " hits: " << hit << " misses: " << miss << endl;
     }
+    outFile << "Total hits: " << total_hits << " Total misses: " << total_misses << endl;
     return {total_alloc, num_page_tables}; // Doubt: why returning 0 for the second value?
 }
 
@@ -211,13 +230,17 @@ pair<int, int> single(const string& filename, ofstream& outFile) {
         }
     }
     outFile << "--------------HITS & MISSES---------------" << endl;
+    unsigned long long int total_hits = 0, total_misses = 0;
     for (auto x : task_table_single) {
         unsigned long long int t = x.first;
         SinglePageTable pt = x.second;
         unsigned long long int hit = pt.hit;
         unsigned long long int miss = pt.miss;
+        total_hits += hit;  
+        total_misses += miss;
         outFile << "Task: T" << t << " hits: " << hit << " misses: " << miss << endl;
     }
+    outFile << "Total hits: " << total_hits << " Total misses: " << total_misses << endl;
     return {tot_alloc, num_page_tables};
 }
 
@@ -252,13 +275,17 @@ pair<int, int> multi(const string& filename, ofstream& outFile) {
             outFile << "Physical Memory allocated to Task T" << task_num << ": " << convertMemorySize(mem_alloc) << endl;
         }
     }
+    unsigned long long int total_hits = 0, total_misses = 0;
     outFile << "--------------HITS & MISSES---------------" << endl;
     for (auto x : task_table_multi) {
         unsigned long long int t = x.first;
         MultiLevelPageTable pt = x.second;
         unsigned long long int hit = pt.hit;
         unsigned long long int miss = pt.miss;
+        total_hits += hit;
+        total_misses += miss;
         outFile << "Task: T" << t << " hits: " << hit << " misses: " << miss << endl;
     }
+    outFile << "Total hits: " << total_hits << " Total misses: " << total_misses << endl;
     return {tot_alloc, num_page_tables};
 }

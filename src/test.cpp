@@ -5,7 +5,6 @@
 #include <iomanip>  // For formatting output
 #include <pthread.h>
 #include <vector>
-
 #include "config.hpp"
 
 using namespace std;

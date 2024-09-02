@@ -6,7 +6,7 @@
 #define PAGE_SIZE_BITS 12
 #define VIRTUAL_MEMORY_SIZE_BITS 32
 #define PHYSICAL_MEMORY_SIZE_BITS 32
-#define PAGE_METHOD 1//0 for map and 1 for single and 2 for multi
+#define PAGE_METHOD 2//0 for map and 1 for single and 2 for multi
 
 
 #define PAGE_SIZE (unsigned long long int)(1ULL<<PAGE_SIZE_BITS)           //size entry  size of one pag3

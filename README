@@ -4,7 +4,9 @@ GROUP DETAILS:
 
 HOW TO RUN?:
 On the terminal run the following command-
--> make ./bin/main
+make
+-> ./bin/main to run memory manager
+-> ./bin/test to generate test tracefile
 
 ABOUT THE DIRECTORIES:
 1. bin:

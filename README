@@ -1,0 +1,27 @@
+GROUP DETAILS:
+1. Kamakshi Gupta - 2023AIB1008
+2. Shubham Gupta - 2023AIB1017
+
+HOW TO RUN?:
+On the terminal run the following command-
+-> make ./bin/main
+
+ABOUT THE DIRECTORIES:
+1. bin:
+    a. main
+2. include:
+    a. config.hpp - Contains all the configurable parameters like physical memory size, virtual memory size, page size, base addresses of the different section of the memory etc.
+    b. io.hpp - All function declarations of the io.cpp
+    c. memory_manager.hpp - All function declarations of the memory_manager.cpp
+    d. task_module - All function declarations of the task_module.cpp
+3. obj:
+    .o files of all the .cpp files
+4. src:
+    a. io.cpp - Contains the functions of parsing and spliting the input and the implementations of all the three methods (map, single level, multi level)
+    b. memory_manager.cpp - Contains the Physical Memory class
+    c. run.cpp - Contains the main function
+    d. task_module.cpp
+    e. test.cpp - Generate a trace file based on the number of tasks
+5. Makefile:
+6. README:
+7. tracefile_4KB_4GB_4GB.txt: Trace File
